@@ -1,0 +1,1316 @@
+# MASTER PROMPT — BUILD REGULAMAP MVP IN REPLIT
+
+You are an expert full-stack engineer and product designer.
+
+Build a working hackathon-ready web application called:
+
+# RegulaMap
+
+### AI Regulatory & Environmental Compliance Drift Tracking Platform
+
+IMPORTANT:
+This is a CREDIT-EFFICIENT MVP.
+
+Do NOT build a huge enterprise system in one pass.
+Do NOT over-engineer.
+Do NOT install unnecessary packages.
+Do NOT create dozens of unnecessary files.
+Do NOT implement features that are not required for the MVP.
+
+The application must look professional, work end-to-end, and be easy to demonstrate.
+
+The goal is to create the smallest practical application that demonstrates the core RegulaMap idea.
+
+---
+
+# 1. CORE PROBLEM
+
+Companies struggle to understand when environmental and regulatory requirements change.
+
+RegulaMap helps a company:
+
+1. See regulations.
+2. Detect changes between old and new versions.
+3. Understand what changed.
+4. Identify possible business impact.
+5. Calculate a simple risk level.
+6. Create compliance actions.
+7. Track deadlines.
+8. View everything from one dashboard.
+
+The product should feel like:
+
+"Google Maps for regulatory compliance."
+
+---
+
+# 2. MVP PRIORITY
+
+Build ONLY these core features first:
+
+### MUST HAVE
+
+* Login/demo login
+* Dashboard
+* Regulations
+* Regulation details
+* Regulation version comparison
+* Regulatory change feed
+* AI-style impact analysis
+* Risk scoring
+* Facilities
+* Compliance actions
+* Deadlines
+* Global regulatory map
+* Search/filtering
+* Responsive UI
+* Seed/demo data
+
+### NICE TO HAVE IF TIME/CREDITS REMAIN
+
+* Real Gemini API
+* AI chat assistant
+* Document upload
+* Notifications
+* Audit log
+* Advanced charts
+
+Do NOT build these optional features until all MUST HAVE features work.
+
+---
+
+# 3. CREDIT-SAVING DEVELOPMENT RULE
+
+Work incrementally.
+
+FIRST build the complete MVP with deterministic/mock AI data.
+
+Only after the application works should you optionally add Gemini integration.
+
+If Gemini API is unavailable:
+
+THE APPLICATION MUST STILL WORK PERFECTLY.
+
+Never make the application dependent on an external AI API.
+
+---
+
+# 4. TECHNOLOGY STACK
+
+Use a simple Replit-friendly architecture.
+
+Preferred:
+
+Frontend:
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router
+* Lucide React
+* Recharts
+
+Backend:
+
+* Node.js
+* Express
+* TypeScript
+
+Database:
+
+* PostgreSQL using Prisma
+
+If PostgreSQL/Prisma setup creates unnecessary complexity in the Replit environment, use the simplest reliable persistent database available in the workspace while preserving the same data model.
+
+Do NOT add libraries unless they are actually required.
+
+---
+
+# 5. APPLICATION STRUCTURE
+
+Create a simple structure similar to:
+
+regulamap/
+│
+├── client/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── services/
+│       ├── data/
+│       ├── types/
+│       └── App.tsx
+│
+├── server/
+│   └── src/
+│       ├── routes/
+│       ├── services/
+│       └── index.ts
+│
+├── prisma/
+│   ├── schema.prisma
+│   └── seed.ts
+│
+├── package.json
+└── README.md
+
+Keep the architecture simple.
+
+---
+
+# 6. DESIGN SYSTEM
+
+Create a modern enterprise SaaS dashboard.
+
+Visual style:
+
+* Professional
+* Clean
+* Modern
+* Minimal
+* Enterprise
+* Data-focused
+
+Use:
+
+* Dark navy/blue primary theme
+* White/light cards
+* Rounded cards
+* Subtle shadows
+* Clear typography
+* Status badges
+* Risk indicators
+* Responsive layouts
+
+Avoid excessive animations.
+
+Use Lucide icons.
+
+The UI must look like a real startup product, not a basic student CRUD application.
+
+---
+
+# 7. MAIN NAVIGATION
+
+Create a sidebar containing:
+
+Dashboard
+Map
+Regulations
+Changes
+Facilities
+Risks
+Actions
+Deadlines
+Assistant
+Reports
+Settings
+
+Each important page must actually work.
+
+If a page is not implemented, do not create a fake navigation link.
+
+---
+
+# 8. ROUTES
+
+Implement these routes:
+
+/
+/login
+
+/app
+/app/dashboard
+/app/map
+/app/regulations
+/app/regulations/:id
+/app/changes
+/app/changes/:id
+/app/facilities
+/app/facilities/:id
+/app/risks
+/app/actions
+/app/deadlines
+/app/assistant
+/app/reports
+/app/settings
+
+All routes must render without errors.
+
+---
+
+# 9. LANDING PAGE
+
+Create a professional landing page.
+
+Hero:
+
+"Know What Changed. Know What It Means."
+
+Subtitle:
+
+"RegulaMap helps organizations detect regulatory changes, understand business impact, and act before compliance deadlines."
+
+Buttons:
+
+"Explore Demo"
+"View Dashboard"
+
+Include three feature cards:
+
+1. Regulatory Change Detection
+2. AI Impact Analysis
+3. Compliance Risk Tracking
+
+Add a simple product preview/dashboard section.
+
+---
+
+# 10. DEMO LOGIN
+
+To save development time, implement a demo login.
+
+Display:
+
+Email:
+[demo@regulamap.com](mailto:demo@regulamap.com)
+
+Password:
+demo123
+
+The demo account should enter the application immediately.
+
+You may also provide a visible:
+
+"Continue with Demo Account"
+
+button.
+
+Do not spend excessive credits implementing complex authentication.
+
+If proper authentication is implemented easily, keep it simple.
+
+---
+
+# 11. DASHBOARD
+
+Create an impressive executive dashboard.
+
+Display KPI cards:
+
+Total Regulations
+Recent Changes
+High Risk Items
+Open Actions
+Upcoming Deadlines
+
+Example:
+
+Regulations: 25
+Recent Changes: 15
+High Risk: 7
+Open Actions: 12
+Deadlines: 8
+
+Use seeded data.
+
+Create charts:
+
+### Risk Distribution
+
+Critical
+High
+Medium
+Low
+
+### Regulatory Changes Over Time
+
+Use Recharts.
+
+### Upcoming Deadlines
+
+Show the next 5 deadlines.
+
+### Recent Regulatory Changes
+
+Show:
+
+Regulation
+Jurisdiction
+Change Type
+Risk
+Effective Date
+
+Clicking a change opens its detail page.
+
+---
+
+# 12. REGULATIONS
+
+Create a regulation directory.
+
+Columns:
+
+Regulation
+Jurisdiction
+Category
+Status
+Effective Date
+Risk
+
+Add:
+
+Search
+Category filter
+Jurisdiction filter
+Risk filter
+
+Example categories:
+
+EMISSIONS
+CARBON
+CLIMATE
+CHEMICALS
+WASTE
+PACKAGING
+WATER
+ENERGY
+AIR_QUALITY
+RECYCLING
+SUSTAINABILITY
+
+---
+
+# 13. REGULATION DETAILS
+
+Each regulation should display:
+
+Title
+Short Title
+Jurisdiction
+Regulatory Body
+Category
+Status
+Publication Date
+Effective Date
+Description
+Applicability
+Source
+
+Then show:
+
+## Version History
+
+Example:
+
+Version 1
+Version 2
+Version 3
+
+Clicking a version comparison opens the regulatory diff.
+
+---
+
+# 14. REGULATORY DIFF ENGINE
+
+THIS IS ONE OF THE MOST IMPORTANT FEATURES.
+
+Create a deterministic text comparison engine.
+
+Input:
+
+OLD REGULATION TEXT
+
+NEW REGULATION TEXT
+
+Output:
+
+Added text
+Removed text
+Changed text
+
+Display a side-by-side comparison.
+
+Example:
+
+OLD:
+
+"The emission limit is 100 tons per year."
+
+NEW:
+
+"The emission limit is 75 tons per year."
+
+Highlight:
+
+Removed:
+100 tons per year
+
+Added:
+75 tons per year
+
+Then show:
+
+CHANGE TYPE:
+THRESHOLD_CHANGE
+
+RISK:
+HIGH
+
+This must work without AI.
+
+Use a lightweight deterministic comparison implementation.
+
+Do NOT use an expensive external AI service for this feature.
+
+---
+
+# 15. CHANGE FEED
+
+Create a regulatory change feed.
+
+Each card should contain:
+
+Regulation name
+Jurisdiction
+Change type
+Detected date
+Effective date
+Risk level
+Short summary
+
+Example:
+
+EU Carbon Emissions Regulation
+
+THRESHOLD CHANGE
+
+Risk: HIGH
+
+"Annual reporting threshold reduced from 100 to 75 tons."
+
+Click:
+
+"View Change"
+
+---
+
+# 16. CHANGE DETAIL PAGE
+
+Create a highly visual change analysis page.
+
+Sections:
+
+### What Changed?
+
+Show concise explanation.
+
+### Regulatory Diff
+
+Show old vs new text.
+
+### Why It Matters
+
+Explain business significance.
+
+### Potential Impact
+
+Products
+Facilities
+Processes
+Suppliers
+
+### Risk
+
+Display:
+
+CRITICAL
+HIGH
+MEDIUM
+LOW
+
+### Recommended Action
+
+Example:
+
+"Review emissions reporting process and update annual reporting configuration."
+
+### Effective Date
+
+Show deadline.
+
+### Source Evidence
+
+Display source regulation information.
+
+At the bottom display this exact disclaimer:
+
+"AI-generated regulatory analysis is not legal advice. Verify material obligations against authoritative sources and qualified professionals."
+
+---
+
+# 17. AI ANALYSIS
+
+Create an AI analysis service abstraction.
+
+IMPORTANT:
+
+The MVP MUST work without an API key.
+
+If GEMINI_API_KEY exists:
+
+Optionally use Gemini.
+
+If no key exists:
+
+Use deterministic analysis based on the regulatory change data.
+
+Example deterministic output:
+
+{
+"summary": "Emission threshold decreased.",
+"riskLevel": "HIGH",
+"confidence": 0.85,
+"recommendedAction": "Review emissions reporting procedures."
+}
+
+Do not make API calls repeatedly.
+
+Do not call AI every time a page loads.
+
+Cache/store generated analysis where practical.
+
+---
+
+# 18. GEMINI IMPLEMENTATION
+
+Only implement this AFTER the core MVP works.
+
+Use:
+
+@google/genai
+
+Environment variable:
+
+GEMINI_API_KEY
+
+Never expose the key in React.
+
+Never put the API key into frontend JavaScript.
+
+Backend only.
+
+If Gemini fails:
+
+return deterministic fallback data.
+
+The application must never crash because Gemini is unavailable.
+
+---
+
+# 19. RISK ENGINE
+
+Create a simple deterministic risk scoring engine.
+
+Factors:
+
+Scope
+Severity
+Proximity
+Obligation
+Exposure
+
+Calculate a score from 0–100.
+
+Example:
+
+0–20 = INFORMATIONAL
+21–40 = LOW
+41–60 = MEDIUM
+61–80 = HIGH
+81–100 = CRITICAL
+
+Display both:
+
+Risk Score
+
+and
+
+Risk Level
+
+Example:
+
+Risk Score: 82
+
+CRITICAL
+
+Keep the calculation simple and explainable.
+
+---
+
+# 20. FACILITIES
+
+Create a facilities page.
+
+Example facilities:
+
+Hyderabad Manufacturing Plant
+Bangalore Assembly Facility
+Chennai Chemical Facility
+Mumbai Packaging Facility
+
+Display:
+
+Name
+Country
+Facility Type
+Risk
+Emissions
+Water Usage
+Energy
+
+Create a facility detail page.
+
+Include:
+
+Facility information
+Processes
+Products
+Environmental metrics
+Related regulations
+Compliance actions
+
+---
+
+# 21. MAP
+
+Create an interactive regulatory map.
+
+Use MapLibre if easy to configure.
+
+If MapLibre causes significant setup problems in Replit, use a lightweight map visualization instead.
+
+Show markers for example jurisdictions:
+
+European Union
+United States
+India
+United Kingdom
+Japan
+Australia
+
+Clicking a marker should display:
+
+Jurisdiction
+Number of regulations
+High-risk changes
+Recent change
+
+Add filters:
+
+All
+High Risk
+Recent Changes
+
+The map must actually respond to clicks.
+
+---
+
+# 22. ACTIONS
+
+Create a compliance action tracker.
+
+Each action contains:
+
+Title
+Description
+Related Regulation
+Assigned Person
+Priority
+Status
+Due Date
+
+Statuses:
+
+OPEN
+IN_PROGRESS
+BLOCKED
+COMPLETED
+
+Allow the user to:
+
+Create action
+Change status
+View action
+Mark completed
+
+Keep CRUD simple.
+
+---
+
+# 23. DEADLINES
+
+Create a deadline page.
+
+Show:
+
+Deadline
+Regulation
+Action
+Due Date
+Risk
+
+Highlight:
+
+Overdue
+Due Soon
+Upcoming
+
+Example:
+
+"Carbon Reporting Submission"
+
+Due in 12 days
+
+HIGH
+
+---
+
+# 24. RISKS PAGE
+
+Create a risk matrix.
+
+Rows:
+
+Regulations
+Facilities
+Products
+Processes
+
+Columns:
+
+Risk
+Score
+Impact
+Recommended Action
+
+Allow filtering by:
+
+Critical
+High
+Medium
+Low
+
+---
+
+# 25. ASSISTANT
+
+Create a simple compliance assistant.
+
+The assistant should answer questions using the application's seeded data.
+
+Example questions:
+
+"What changed recently?"
+
+"Which regulations are high risk?"
+
+"What deadlines are coming up?"
+
+"Which facility has the highest risk?"
+
+"Show me recent emission changes."
+
+For MVP:
+
+Use deterministic database-backed responses.
+
+If Gemini exists, optionally enhance answers.
+
+Never invent regulatory facts.
+
+If information does not exist, say:
+
+"Insufficient source evidence."
+
+---
+
+# 26. REPORTS
+
+Create a simple reports page.
+
+Display:
+
+Compliance Overview
+High Risk Regulations
+Open Actions
+Upcoming Deadlines
+
+Add a button:
+
+"Generate Report"
+
+For MVP, generate a clean printable report page.
+
+Do NOT build a complicated PDF generation system unless it is easy.
+
+---
+
+# 27. SETTINGS
+
+Create a simple settings page.
+
+Sections:
+
+Organization
+User
+Notification Preferences
+
+Use demo organization:
+
+Apex Industrial Systems
+
+---
+
+# 28. DATABASE
+
+Create a minimal database schema.
+
+Do NOT recreate the huge enterprise schema unless required.
+
+Use these main entities:
+
+User
+Organization
+Regulation
+RegulationVersion
+RegulatoryChange
+Facility
+ComplianceAction
+Deadline
+RiskAssessment
+
+Relationships should allow:
+
+Organization
+→ Facilities
+
+Organization
+→ Actions
+
+Regulation
+→ Versions
+
+Regulation
+→ Changes
+
+Change
+→ Risk Assessment
+
+Facility
+→ Risk Assessment
+
+Action
+→ Regulation
+
+Action
+→ Facility
+
+---
+
+# 29. SEED DATA
+
+Create realistic demo data.
+
+Organization:
+
+Apex Industrial Systems
+
+Create:
+
+25 regulations
+15 regulatory changes
+4 facilities
+8 products if easy
+10+ compliance actions
+10+ deadlines
+20+ risk assessments
+
+Use realistic but clearly demo/sample regulatory information.
+
+IMPORTANT:
+
+Do not claim fictional demo regulations are real laws.
+
+Mark demo data appropriately.
+
+For example:
+
+"Demo Regulation — EU Industrial Emissions"
+
+This is a demonstration dataset.
+
+---
+
+# 30. SAMPLE REGULATORY CHANGE
+
+Create at least one very clear demo.
+
+REGULATION:
+
+Demo Industrial Emissions Standard
+
+OLD:
+
+"Facilities emitting more than 100 tons of CO2 annually must submit an annual emissions report."
+
+NEW:
+
+"Facilities emitting more than 75 tons of CO2 annually must submit an annual emissions report."
+
+Change Type:
+
+THRESHOLD_CHANGE
+
+Risk:
+
+HIGH
+
+Impact:
+
+More facilities may now fall under reporting requirements.
+
+Recommended Action:
+
+"Review facility emissions and determine whether the reporting threshold now applies."
+
+This demo should be easy to understand during a hackathon presentation.
+
+---
+
+# 31. API
+
+Create only the APIs actually needed.
+
+Example:
+
+GET /api/dashboard
+
+GET /api/regulations
+
+GET /api/regulations/:id
+
+GET /api/changes
+
+GET /api/changes/:id
+
+GET /api/facilities
+
+GET /api/facilities/:id
+
+GET /api/actions
+
+POST /api/actions
+
+PATCH /api/actions/:id
+
+GET /api/deadlines
+
+GET /api/risks
+
+POST /api/assistant/query
+
+Keep APIs clean and simple.
+
+---
+
+# 32. ERROR HANDLING
+
+Every API must have:
+
+Validation
+Error handling
+Useful HTTP status codes
+
+Frontend must display friendly errors.
+
+Never show raw stack traces to users.
+
+---
+
+# 33. LOADING STATES
+
+Every data-driven page must have:
+
+Loading state
+Empty state
+Error state
+
+Do not leave blank screens.
+
+---
+
+# 34. RESPONSIVE DESIGN
+
+The application must work on:
+
+Desktop
+Laptop
+Tablet
+Mobile
+
+Sidebar should become a mobile menu on small screens.
+
+---
+
+# 35. PERFORMANCE / CREDIT OPTIMIZATION
+
+VERY IMPORTANT.
+
+Optimize for Replit Agent credits.
+
+Do NOT:
+
+* repeatedly rewrite working files
+* create unnecessary abstractions
+* install unnecessary packages
+* build unnecessary microservices
+* create unnecessary animations
+* repeatedly call AI
+* build complex authentication
+* build real regulatory web scraping initially
+* build complex notification infrastructure
+* build unnecessary enterprise RBAC
+* create hundreds of files
+
+Prefer:
+
+* simple components
+* reusable components
+* seeded data
+* deterministic algorithms
+* one backend
+* one frontend
+* one database
+* minimal dependencies
+
+---
+
+# 36. DEVELOPMENT STRATEGY
+
+Follow this order EXACTLY.
+
+PHASE 1:
+
+Inspect workspace.
+
+If an existing application exists, reuse it instead of rebuilding everything.
+
+PHASE 2:
+
+Create the basic React UI and routing.
+
+PHASE 3:
+
+Create database/schema and seed data.
+
+PHASE 4:
+
+Create Express API.
+
+PHASE 5:
+
+Connect frontend to API.
+
+PHASE 6:
+
+Implement regulatory diff engine.
+
+PHASE 7:
+
+Implement risk engine.
+
+PHASE 8:
+
+Implement dashboard.
+
+PHASE 9:
+
+Implement map.
+
+PHASE 10:
+
+Implement actions and deadlines.
+
+PHASE 11:
+
+Implement assistant using deterministic responses.
+
+PHASE 12:
+
+ONLY IF THE APPLICATION IS ALREADY WORKING:
+Add optional Gemini integration.
+
+PHASE 13:
+
+Test everything.
+
+---
+
+# 37. IMPORTANT REPLIT AGENT BEHAVIOR
+
+Do NOT ask me to manually create every file.
+
+Do the implementation yourself.
+
+Before creating new files:
+
+Inspect existing files.
+
+Before installing a package:
+
+Check whether it is already installed.
+
+Before rewriting code:
+
+Check whether the existing implementation can be reused.
+
+Do not overwrite working functionality unnecessarily.
+
+---
+
+# 38. NO PLACEHOLDER RULE
+
+Do NOT create:
+
+TODO
+
+Coming Soon
+
+Fake buttons
+
+Empty pages
+
+Broken routes
+
+Lorem ipsum
+
+Unimplemented API endpoints
+
+Dummy loading forever
+
+If a feature cannot be implemented properly within the MVP:
+
+Remove it from navigation rather than creating a broken feature.
+
+---
+
+# 39. DEMO-FIRST EXPERIENCE
+
+The application must be easy to demonstrate in a hackathon.
+
+A judge should be able to:
+
+1. Open application.
+2. Enter demo mode.
+3. See dashboard.
+4. Open a regulatory change.
+5. See old vs new text.
+6. See risk analysis.
+7. See affected facility.
+8. Create compliance action.
+9. View deadline.
+10. View change on map.
+
+This is the PRIMARY user journey.
+
+---
+
+# 40. FINAL QUALITY CHECK
+
+Before saying the application is finished, verify:
+
+* Application starts successfully.
+* Frontend builds.
+* Backend starts.
+* Database works.
+* Seed data loads.
+* Demo login works.
+* Dashboard works.
+* Regulations work.
+* Regulation detail works.
+* Change feed works.
+* Diff engine works.
+* Risk scoring works.
+* Facilities work.
+* Actions work.
+* Deadlines work.
+* Map works.
+* Assistant works.
+* No broken navigation.
+* No console-breaking errors.
+* No missing imports.
+* No TypeScript errors.
+* No exposed API keys.
+
+---
+
+# 41. FINAL COMMAND
+
+After implementation:
+
+1. Run the application.
+2. Test the main user journey.
+3. Fix errors.
+4. Build the frontend.
+5. Verify APIs.
+6. Verify database seed.
+7. Verify responsive layout.
+
+Then provide a concise final report containing:
+
+### Built
+
+List the major features.
+
+### Technology
+
+List the technologies actually used.
+
+### Demo Login
+
+Provide the demo credentials.
+
+### Run
+
+Explain how to start the application.
+
+### Optional Environment Variables
+
+List only variables actually required.
+
+### Testing
+
+List what was successfully tested.
+
+DO NOT claim something works unless you actually verified it.
+
+---
+
+# MOST IMPORTANT RULE
+
+Build a polished, working MVP first.
+
+Do not waste Replit credits trying to implement every enterprise feature from the original RegulaMap specification.
+
+The final application should be:
+
+FAST
+STABLE
+DEMO-READY
+PROFESSIONAL
+EASY TO UNDERSTAND
+CREDIT-EFFICIENT
+
+START BUILDING NOW.

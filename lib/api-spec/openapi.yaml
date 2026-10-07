@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: regulamap
+    description: Demo regulatory compliance data
 paths:
   /healthz:
     get:
@@ -24,6 +26,82 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /regulamap/overview:
+    get:
+      operationId: getRegulaMapOverview
+      tags: [regulamap]
+      summary: Get the complete RegulaMap demo workspace
+      responses:
+        "200":
+          description: Organization, regulations, changes, facilities, actions, and risk data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegulaMapOverview"
+  /regulamap/actions:
+    post:
+      operationId: createComplianceAction
+      tags: [regulamap]
+      summary: Create a compliance action
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComplianceActionInput"
+      responses:
+        "201":
+          description: Created action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComplianceAction"
+        "400":
+          description: Invalid action
+  /regulamap/actions/{id}:
+    patch:
+      operationId: updateComplianceAction
+      tags: [regulamap]
+      summary: Update a compliance action
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComplianceActionUpdate"
+      responses:
+        "200":
+          description: Updated action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComplianceAction"
+        "404":
+          description: Action not found
+  /regulamap/assistant/query:
+    post:
+      operationId: queryComplianceAssistant
+      tags: [regulamap]
+      summary: Ask a question about the seeded workspace data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssistantQueryInput"
+      responses:
+        "200":
+          description: Evidence-grounded answer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssistantAnswer"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +111,181 @@ components:
           type: string
       required:
         - status
+    RiskLevel:
+      type: string
+      enum: [INFORMATIONAL, LOW, MEDIUM, HIGH, CRITICAL]
+    ActionStatus:
+      type: string
+      enum: [OPEN, IN_PROGRESS, BLOCKED, COMPLETED]
+    ActionPriority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH, CRITICAL]
+    RegulationVersion:
+      type: object
+      properties:
+        id: { type: string }
+        version: { type: integer }
+        publishedAt: { type: string }
+        summary: { type: string }
+        text: { type: string }
+      required: [id, version, publishedAt, summary, text]
+    Regulation:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        shortTitle: { type: string }
+        jurisdiction: { type: string }
+        regulator: { type: string }
+        category: { type: string }
+        status: { type: string }
+        publicationDate: { type: string }
+        effectiveDate: { type: string }
+        description: { type: string }
+        applicability: { type: string }
+        source: { type: string }
+        riskScore: { type: integer }
+        riskLevel: { $ref: "#/components/schemas/RiskLevel" }
+        versions:
+          type: array
+          items: { $ref: "#/components/schemas/RegulationVersion" }
+      required: [id, title, shortTitle, jurisdiction, regulator, category, status, publicationDate, effectiveDate, description, applicability, source, riskScore, riskLevel, versions]
+    RegulatoryChange:
+      type: object
+      properties:
+        id: { type: string }
+        regulationId: { type: string }
+        regulationTitle: { type: string }
+        jurisdiction: { type: string }
+        changeType: { type: string }
+        detectedDate: { type: string }
+        effectiveDate: { type: string }
+        riskLevel: { $ref: "#/components/schemas/RiskLevel" }
+        riskScore: { type: integer }
+        summary: { type: string }
+        oldText: { type: string }
+        newText: { type: string }
+        whyItMatters: { type: string }
+        products: { type: array, items: { type: string } }
+        facilities: { type: array, items: { type: string } }
+        processes: { type: array, items: { type: string } }
+        suppliers: { type: array, items: { type: string } }
+        recommendedAction: { type: string }
+        source: { type: string }
+        confidence: { type: number }
+      required: [id, regulationId, regulationTitle, jurisdiction, changeType, detectedDate, effectiveDate, riskLevel, riskScore, summary, oldText, newText, whyItMatters, products, facilities, processes, suppliers, recommendedAction, source, confidence]
+    Facility:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        country: { type: string }
+        city: { type: string }
+        facilityType: { type: string }
+        riskScore: { type: integer }
+        riskLevel: { $ref: "#/components/schemas/RiskLevel" }
+        emissions: { type: number }
+        waterUsage: { type: number }
+        energy: { type: number }
+        processes: { type: array, items: { type: string } }
+        products: { type: array, items: { type: string } }
+        regulationIds: { type: array, items: { type: string } }
+      required: [id, name, country, city, facilityType, riskScore, riskLevel, emissions, waterUsage, energy, processes, products, regulationIds]
+    ComplianceAction:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        description: { type: string }
+        regulationId: { type: string }
+        facilityId: { type: ["string", "null"] }
+        assignedTo: { type: string }
+        priority: { $ref: "#/components/schemas/ActionPriority" }
+        status: { $ref: "#/components/schemas/ActionStatus" }
+        dueDate: { type: string }
+        createdAt: { type: string }
+      required: [id, title, description, regulationId, facilityId, assignedTo, priority, status, dueDate, createdAt]
+    ComplianceActionInput:
+      type: object
+      properties:
+        title: { type: string, minLength: 3, maxLength: 140 }
+        description: { type: string, minLength: 3, maxLength: 1000 }
+        regulationId: { type: string }
+        facilityId: { type: ["string", "null"] }
+        assignedTo: { type: string, minLength: 2, maxLength: 80 }
+        priority: { $ref: "#/components/schemas/ActionPriority" }
+        status: { $ref: "#/components/schemas/ActionStatus" }
+        dueDate: { type: string }
+      required: [title, description, regulationId, facilityId, assignedTo, priority, status, dueDate]
+    ComplianceActionUpdate:
+      type: object
+      properties:
+        status: { $ref: "#/components/schemas/ActionStatus" }
+        priority: { $ref: "#/components/schemas/ActionPriority" }
+        assignedTo: { type: string, minLength: 2, maxLength: 80 }
+        dueDate: { type: string }
+    Deadline:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        regulationId: { type: string }
+        regulationTitle: { type: string }
+        actionId: { type: ["string", "null"] }
+        actionTitle: { type: ["string", "null"] }
+        dueDate: { type: string }
+        riskLevel: { $ref: "#/components/schemas/RiskLevel" }
+      required: [id, title, regulationId, regulationTitle, actionId, actionTitle, dueDate, riskLevel]
+    RiskFactors:
+      type: object
+      properties:
+        scope: { type: integer, minimum: 0, maximum: 100 }
+        severity: { type: integer, minimum: 0, maximum: 100 }
+        proximity: { type: integer, minimum: 0, maximum: 100 }
+        obligation: { type: integer, minimum: 0, maximum: 100 }
+        exposure: { type: integer, minimum: 0, maximum: 100 }
+      required: [scope, severity, proximity, obligation, exposure]
+    RiskAssessment:
+      type: object
+      properties:
+        id: { type: string }
+        entityType: { type: string }
+        entityId: { type: string }
+        name: { type: string }
+        score: { type: integer }
+        level: { $ref: "#/components/schemas/RiskLevel" }
+        impact: { type: string }
+        recommendedAction: { type: string }
+        factorScores: { $ref: "#/components/schemas/RiskFactors" }
+      required: [id, entityType, entityId, name, score, level, impact, recommendedAction, factorScores]
+    TrendPoint:
+      type: object
+      properties:
+        month: { type: string }
+        changes: { type: integer }
+      required: [month, changes]
+    RegulaMapOverview:
+      type: object
+      properties:
+        organization: { type: string }
+        regulations: { type: array, items: { $ref: "#/components/schemas/Regulation" } }
+        changes: { type: array, items: { $ref: "#/components/schemas/RegulatoryChange" } }
+        facilities: { type: array, items: { $ref: "#/components/schemas/Facility" } }
+        actions: { type: array, items: { $ref: "#/components/schemas/ComplianceAction" } }
+        deadlines: { type: array, items: { $ref: "#/components/schemas/Deadline" } }
+        risks: { type: array, items: { $ref: "#/components/schemas/RiskAssessment" } }
+        changeTrend: { type: array, items: { $ref: "#/components/schemas/TrendPoint" } }
+      required: [organization, regulations, changes, facilities, actions, deadlines, risks, changeTrend]
+    AssistantQueryInput:
+      type: object
+      properties:
+        question: { type: string, minLength: 3, maxLength: 500 }
+      required: [question]
+    AssistantAnswer:
+      type: object
+      properties:
+        answer: { type: string }
+        sources: { type: array, items: { type: string } }
+        insufficientEvidence: { type: boolean }
+      required: [answer, sources, insufficientEvidence]
 

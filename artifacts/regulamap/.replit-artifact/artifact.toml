@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "RegulaMap"
+description = "A regulatory compliance drift platform for teams to track regulations, compare changes, assess impact, and manage facility-level compliance actions and deadlines."
+version = "1.0.0"
+id = "artifacts/regulamap"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20339
+
+[services.development]
+run = "pnpm --filter @workspace/regulamap run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/regulamap", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/regulamap/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20339"
+BASE_PATH = "/"

@@ -1,44 +1,55 @@
-# [Project name]
+# RegulaMap
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+RegulaMap is a demonstration compliance workspace for tracking sample regulations, regulatory changes, facility exposure, actions, deadlines, and risk.
 
 ## Run & Operate
-
+- `pnpm --filter @workspace/regulamap run dev` — run the web preview
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/db run push` — push development database schema changes after schema edits
+- Required env: `DATABASE_URL` for the PostgreSQL-backed API; Replit supplies `PORT` to the server
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
+- Web: React, Vite, Wouter, TanStack Query, Recharts
+- API: Express 5 with generated OpenAPI client and Zod validation
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
 - Build: esbuild (CJS bundle)
 
 ## Where things live
-
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/regulamap/src/App.tsx` — RegulaMap routes, screens, and interactions
+- `artifacts/regulamap/src/index.css` — application styling and responsive layouts
+- `artifacts/api-server/src/routes/regulamap.ts` — RegulaMap API endpoints
+- `artifacts/api-server/src/routes/regulamap-data.ts` — clearly labeled demonstration data and deterministic risk/assistant logic
+- `lib/api-spec/openapi.yaml` — API contract source of truth
+- `lib/db/src/schema/compliance-actions.ts` — persisted compliance-action schema
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The assistant uses deterministic rules over workspace records; no LLM key or provider is required.
+- The weighted risk score is deterministic and explainable: scope 15%, severity 25%, proximity 20%, obligation 15%, exposure 25%.
+- The seeded regulation text and sources are simulated. Do not present them as authoritative or add fabricated official-source URLs.
+- The demo login is an unprotected entry screen, not production authentication.
+- Compliance-action creates and status changes are persisted through the API and PostgreSQL.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Users can review the dashboard, filter regulations, compare versions, inspect facilities and mapped jurisdictions, prioritize risks, create and complete compliance actions, track deadlines, ask evidence-bounded questions, and print a report.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+The MVP must work without an external AI API key; a deterministic demonstration assistant is the first implementation.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Update `lib/api-spec/openapi.yaml` first, then run API code generation when changing API request/response shapes.
+- Verify source claims against authoritative material before using the sample data for real compliance decisions.
+- Action persistence requires a provisioned PostgreSQL `DATABASE_URL`.
 
 ## Pointers
 
